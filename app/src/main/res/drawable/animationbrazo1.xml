@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/selected1" android:oneshot="false">
+    <item android:drawable="@drawable/girl_aei1" android:duration="80" />
+    <item android:drawable="@drawable/girl_cdgknstxyz1" android:duration="80" />
+    <item android:drawable="@drawable/girl_j1" android:duration="80" />
+    <item android:drawable="@drawable/girl_aei1" android:duration="80" />
+    <item android:drawable="@drawable/girl_o1" android:duration="80" />
+    <item android:drawable="@drawable/girl_r1" android:duration="80" />
+    <item android:drawable="@drawable/girl_space1" android:duration="80" />
+</animation-list>

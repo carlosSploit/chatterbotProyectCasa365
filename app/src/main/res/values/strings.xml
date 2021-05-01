@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">whast</string>
+    <string name="page_title">Whatsaap</string>
+    <string name="favorite">favoritos</string>
+    <string name="content_description_favorite"></string>
+    <string name="search">buscar</string>
+    <string name="content_description_search"></string>
+    <string name="tabschat">CHATS</string>
+    <string name="tabsestados">ESTADOS</string>
+    <string name="tabsllamadas">LLAMADAS</string>
+</resources>
