@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "183313174814",
+    "project_id": "chatterbot-8f979",
+    "storage_bucket": "chatterbot-8f979.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:183313174814:android:c635fd12d03bc13522b90f",
+        "android_client_info": {
+          "package_name": "com.example.whast"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "183313174814-jshll0hu09v9nlro6ohminb9p8aj6osv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.whast",
+            "certificate_hash": "9c399109878766d51d9bfa67954c44abc387cbe5"
+          }
+        },
+        {
+          "client_id": "183313174814-vio93s73s6obqmk43eg0of690epsrq18.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDC53EpRyAc4ZBGfQpAGpKXFqVyAhmHtSQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "183313174814-vio93s73s6obqmk43eg0of690epsrq18.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
