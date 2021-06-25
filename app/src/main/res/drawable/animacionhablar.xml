@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/selectedhabla1"
+    android:oneshot="false"
+    >
+    <item android:drawable="@drawable/hablar01" android:duration="80" />
+    <item android:drawable="@drawable/hablar02" android:duration="80" />
+    <item android:drawable="@drawable/hablar03" android:duration="80" />
+    <item android:drawable="@drawable/hablar04" android:duration="80" />
+    <item android:drawable="@drawable/hablar05" android:duration="80" />
+    <item android:drawable="@drawable/hablar06" android:duration="80" />
+    <item android:drawable="@drawable/hablar07" android:duration="80" />
+    <item android:drawable="@drawable/hablar08" android:duration="80" />
+    <item android:drawable="@drawable/hablar09" android:duration="80" />
+    <item android:drawable="@drawable/hablar10" android:duration="80" />
+    <item android:drawable="@drawable/hablar11" android:duration="80" />
+    <item android:drawable="@drawable/hablar12" android:duration="80" />
+    <item android:drawable="@drawable/hablar13" android:duration="80" />
+    <item android:drawable="@drawable/hablar14" android:duration="80" />
+    <item android:drawable="@drawable/hablar15" android:duration="80" />
+    <item android:drawable="@drawable/hablar16" android:duration="80" />
+
+    <item android:drawable="@drawable/hablar17" android:duration="80" />
+    <item android:drawable="@drawable/hablar18" android:duration="80" />
+    <item android:drawable="@drawable/hablar19" android:duration="80" />
+    <item android:drawable="@drawable/hablar20" android:duration="80" />
+    <item android:drawable="@drawable/hablar21" android:duration="80" />
+    <item android:drawable="@drawable/hablar22" android:duration="80" />
+    <item android:drawable="@drawable/hablar23" android:duration="80" />
+    <item android:drawable="@drawable/hablar24" android:duration="80" />
+    <item android:drawable="@drawable/hablar25" android:duration="80" />
+    <item android:drawable="@drawable/hablar26" android:duration="80" />
+    <item android:drawable="@drawable/hablar27" android:duration="80" />
+    <item android:drawable="@drawable/hablar28" android:duration="80" />
+
+    <item android:drawable="@drawable/hablar29" android:duration="80" />
+    <item android:drawable="@drawable/hablar30" android:duration="80" />
+    <item android:drawable="@drawable/hablar31" android:duration="80" />
+</animation-list>

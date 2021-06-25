@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:icon="@drawable/baseline_photo_camera_white_24dp"
-        android:title="camera"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/app_bar_search"
-        android:icon="@drawable/ic_search_black_24dp"
-        android:title="llamada"
-        app:actionViewClass="android.widget.SearchView"
-        app:showAsAction="always" />
-    <item android:title="Options" />
+    <item android:id="@+id/csecion" android:title="Cerrar Seccion" />
+    <item android:id="@+id/salir" android:title="Salir" />
 </menu>
