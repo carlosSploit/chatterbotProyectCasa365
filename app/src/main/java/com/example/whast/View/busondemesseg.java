@@ -6,17 +6,21 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.example.whast.login;
+
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.Time;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -53,6 +57,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
@@ -60,24 +65,39 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
 public class busondemesseg extends AppCompatActivity {
 
     private Toolbar bar;
     private ImageView perfil;
     private ImageView iaperfil;
+    private ImageView iaperfilnot;
     private ImageButton img;
     private ImageButton anim;
     private LinearLayout animcarga;
     private GridView contenMesseg;
     private ArrayList<Messeg> messeg;
+    private NavigationView navview;
     private EditText edmes;
     private TextView nombre;
+    private TextView nombreid;
+    private TextView correoid;
+    private TextView cerrarcesb;
+    private TextView salirb;
     RequestQueue  rq;
     TexttoSpeach tts;
     Handler handler=new Handler();
@@ -90,17 +110,32 @@ public class busondemesseg extends AppCompatActivity {
     //Variables opcionales para desloguear de google tambien
     private GoogleSignInClient mGoogleSignInClient;
     private GoogleSignInOptions gso;
+    int widthAv = 0;
+    int heightAv = 0;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_busondemesseg);
+
+        handleSSLHandshake();
+        // captar la resolucion de la pantalla
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        //int height = displaymetrics.heightPixels;
+        //int width = displaymetrics.widthPixels;
+        widthAv = (int)((displaymetrics.widthPixels * (0.46)) / 1);
+        heightAv = (int)((displaymetrics.heightPixels * (0.36)) / 1);
+        System.out.println("*************************************************************");
+        System.out.println("x: " + widthAv + " y: "+heightAv);
         //declaracion de variables
         bar = (Toolbar)findViewById(R.id.my_tolbarmesf);
         contenMesseg = (GridView)findViewById(R.id.contenmeg);
         edmes = (EditText)findViewById(R.id.mesag);
+        //**********************************************************
         iaperfil = (ImageView)findViewById(R.id.iaperfil);
+        //*********************************************************
         img = (ImageButton)findViewById(R.id.Enviarmenss);
         animcarga = (LinearLayout)findViewById(R.id.animascarga);
         anim = (ImageButton)findViewById(R.id.imageanimacion);
@@ -108,7 +143,12 @@ public class busondemesseg extends AppCompatActivity {
 
         perfil = (ImageView)findViewById(R.id.imageuser);
         nombre = (TextView)findViewById(R.id.nombreuser);
-
+        iaperfilnot = (ImageView)findViewById(R.id.photouserid);
+        nombreid = (TextView)findViewById(R.id.nameuserid);
+        correoid = (TextView)findViewById(R.id.correouserid);
+        cerrarcesb = (TextView)findViewById(R.id.cerrarcesbt);
+        salirb = (TextView)findViewById(R.id.salirbt);
+        navview = (NavigationView)findViewById(R.id.navigationbarp);
         setSupportActionBar(bar);
 
         animcarga.setVisibility(View.GONE);
@@ -126,12 +166,64 @@ public class busondemesseg extends AppCompatActivity {
 
         String[] nomaux = cuFirebaseUser.getDisplayName().split(" ");
         String nom = nomaux[0];
+        String nombrenot = nomaux[0]+nomaux[1];
         nombre.setText(nom);
-
+        nombreid.setText(nombrenot);
+        correoid.setText(cuFirebaseUser.getEmail().replace("gmail.com"," "));
         Picasso.get()
                 .load(cuFirebaseUser.getPhotoUrl())
                 .transform(new CircleTransform())
                 .into(perfil);
+        //******** eventos de reactivacion del navigationlayout ********
+        perfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navview.setVisibility(View.VISIBLE);
+            }
+        });
+
+        nombreid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navview.setVisibility(View.GONE);
+            }
+        });
+
+        salirb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent2 = new Intent(getApplicationContext(), login.class);
+                intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent2.putExtra("EXIT", true);
+                startActivity(intent2);
+            }
+        });
+
+        cerrarcesb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                auth.signOut();
+                //Cerrar sesión con google tambien: Google sign out
+                mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        //Abrir MainActivity con SigIn button
+                        if(task.isSuccessful()){
+                            Intent mainActivity = new Intent(getApplicationContext(), login.class);
+                            startActivity(mainActivity);
+                        }else{
+                            Toast.makeText(getApplicationContext(), "No se pudo cerrar sesión con google",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+            }
+        });
+        //****************************************************************
+        Picasso.get()
+                .load(cuFirebaseUser.getPhotoUrl())
+                .transform(new CircleTransform())
+                .into(iaperfilnot);
         //inicializar accion del boton
         img.setImageResource(R.drawable.ic_baseline_mic_none_24);
         img.setOnClickListener(new View.OnClickListener() {
@@ -231,10 +323,53 @@ public class busondemesseg extends AppCompatActivity {
         edmes.setText("");
     }
 
+    // deja realizar peticiones ssl que esten en el mismo equipo de pruebas con certificado de openssl
+    @SuppressLint("TrulyRandom")
+    public static void handleSSLHandshake() {
+        try {
+            TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+                public X509Certificate[] getAcceptedIssuers() {
+                    return new X509Certificate[0];
+                }
+
+                @Override
+                public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                }
+
+                @Override
+                public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                }
+            }};
+
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+            HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
+                @Override
+                public boolean verify(String arg0, SSLSession arg1) {
+                    return true;
+                }
+            });
+        } catch (Exception ignored) {
+        }
+    }
+
+    public String sacarurl(String meeg){
+        char[] lst = meeg.toCharArray();
+        int abrebo = 0;
+        for (int i = 0; i< lst.length-1; i++){
+            if(lst[i]=='h' && lst[i+1]=='t' && lst[i+2]=='t'){
+                abrebo = i;
+                break;
+            }
+        }
+        return (abrebo!=0)?meeg.substring(abrebo,lst.length-1):" ";
+    }
+
     public void ResponsedIA(String Apiparent){
         StringRequest st=new StringRequest(
                 Request.Method.GET,
-                "https://chatterbotte.herokuapp.com/app/chatbot/" + Apiparent.replaceAll(" ", "%20")
+                "https://"+getString(R.string.domineprue)+"/app/chatbot/" + Apiparent.replaceAll(" ", "%20")
                 , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -278,14 +413,28 @@ public class busondemesseg extends AppCompatActivity {
                         }
                         //Log.d("JSONarray","Result: "+ lsms.size());
                     }else{
-                        messeg.add(new Messeg(obj.getString("messeg"),'r',horsnow(),null));
+                        if(sacarurl(obj.getString("messeg")).equals(" ")){
+                            //Log.d("errorurlsap","entra por aca asi que porlaas");
+                            messeg.add(new Messeg(obj.getString("messeg"),'r',horsnow(),null));
+                        }else{//si es un url se ingresara una escucha para ingresar a una pagina web
+                            messeg.add(new Messeg(obj.getString("messeg"),'u',horsnow(),null));
+                        }
+
                     }
                     optimizar();
+                    String messegText = "";
+                    // metodo que sirve para saber si el mensaje es una url o mensaje normal
+                    if(sacarurl(obj.getString("messeg")).equals(" ")){
+                        //Log.d("errorurlsap","entra por aca asi que porlaas");
+                        messegText = obj.getString("messeg");
+                    }else{//si es un url se ingresara una escucha para ingresar a una pagina web
+                        messegText = obj.getString("messeg").split("\n")[1];
+                    }
                     AdapterUser ad=new AdapterUser(messeg,getApplicationContext(),getResources(),getLayoutInflater());
                     contenMesseg.setAdapter(ad);
                     contenMesseg.smoothScrollToPosition(View.SCROLL_INDICATOR_END); //vajar el scroll
                     //Log.d("Messeg;","leng:"+ String.valueOf(obj.getString("messeg")).length()+" text: "+obj.getString("messeg"));
-                    animation_vos(obj.getString("messeg"));
+                    animation_vos(messegText);
                     //en caso que las uno de los mensajes sea igual que el parametro que activa el form, se muestra el formulario
                     if (obj.getString("messeg").equals("Rellena el siguiente formulario")){
                         alertDialeg();
@@ -374,7 +523,7 @@ public class busondemesseg extends AppCompatActivity {
     public void animation_vos(String messeg){
 
         char[] lts = messeg.toCharArray();
-        Integer[] listIm = {R.drawable.animationsinbrazos,R.drawable.animationbrazo1,R.drawable.animationbrazo};
+        //Integer[] listIm = {R.drawable.animationsinbrazos,R.drawable.animationbrazo1,R.drawable.animationbrazo};
 
         redimentImageView(0);
 
@@ -404,22 +553,23 @@ public class busondemesseg extends AppCompatActivity {
 
     //evitar el cambio grotesco entre animacion y animacion
     private void redimentImageView(int classAnin){
-        int ancho = 0;
-        int alto = 0;
+        //int ancho = 0;
+        //int alto = 0;
         ArrayList<Integer> redis=new ArrayList<>();
         redis.add(1);
         ArrayList<Integer> stati=new ArrayList<>();
         stati.add(0);
         stati.add(2);
-        if(stati.indexOf(classAnin)!=-1){
-            ancho = 500;
-            alto = 600;
-        }else if(redis.indexOf(classAnin)!=-1){
-            ancho = 650;
-            alto = 600;
-        }
+
+        //if(stati.indexOf(classAnin)!=-1){
+        //    ancho = 500;
+        //    alto = 600;
+        //}else if(redis.indexOf(classAnin)!=-1){
+        //    ancho = 650;
+        //    alto = 600;
+        //}
         //redimencionar el imagevie
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ancho, alto);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(widthAv, heightAv);
         params.addRule(RelativeLayout.CENTER_IN_PARENT);
         iaperfil.setLayoutParams(params);
     }
@@ -443,33 +593,8 @@ public class busondemesseg extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.salir:
-                    Intent intent2 = new Intent(getApplicationContext(), login.class);
-                    intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent2.putExtra("EXIT", true);
-                    startActivity(intent2);
-                return true;
-                case R.id.csecion:
-                    auth.signOut();
-                    //Cerrar sesión con google tambien: Google sign out
-                    mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            //Abrir MainActivity con SigIn button
-                            if(task.isSuccessful()){
-                                Intent mainActivity = new Intent(getApplicationContext(), login.class);
-                                startActivity(mainActivity);
-                            }else{
-                                Toast.makeText(getApplicationContext(), "No se pudo cerrar sesión con google",
-                                        Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
-                    return true;
-            default:
+
                 return super.onOptionsItemSelected(item);
-        }
     }
 
     @Override
@@ -510,7 +635,7 @@ public class busondemesseg extends AppCompatActivity {
     public void EnviarMegeg(String msseg, String nomb, String num, String corr){
         rq = Volley.newRequestQueue(this);
         String parat = "?messeg="+msseg+"&nombre="+nomb+"&numero="+num+"&correo="+ corr;
-        String url ="https://chatterbotte.herokuapp.com/app/correo";
+        String url ="https://"+getString(R.string.domineprue)+"/app/correo";
         // Request a string response from the provided URL.
         StringRequest st=new StringRequest(
                 Request.Method.GET,

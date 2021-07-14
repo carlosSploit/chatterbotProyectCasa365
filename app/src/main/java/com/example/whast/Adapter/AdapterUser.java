@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,6 +112,67 @@ public class AdapterUser extends BaseAdapter {
 
                 //Log.d("url",sacarurl(meg.get(position).getContenmef()));
             }
+        }else if (meg.get(position).getTipo() == 'u'){
+            if(Inflt == null){
+                convertView = LayoutInflater.from(contex).inflate(R.layout.prueba,null);
+            }
+            if(convertView == null){
+                convertView = Inflt.inflate(R.layout.prueba,null);
+            }else{
+
+                TextView messeg = convertView.findViewById(R.id.subtitle);
+                TextView nameent = convertView.findViewById(R.id.titlename);
+                TextView texthors = convertView.findViewById(R.id.timecontn);
+                TextView contenent = convertView.findViewById(R.id.contententer);
+                TextView hosname = convertView.findViewById(R.id.hostname);
+                ImageView imgente = convertView.findViewById(R.id.iconenter);
+                ImageView perfil = convertView.findViewById(R.id.perfilpersonphoto);
+
+                perfil.setImageDrawable(Imageredond(perfil,R.drawable.parpadeo16));
+                texthors.setText(meg.get(position).getHora());
+
+                String data[] = meg.get(position).getContenmef().split("\n");
+
+                //si hay mas itens se ingresara el menssage y los demas itents
+                messeg.setText(data[0]);
+                nameent.setText(data[1]);
+                contenent.setText((data[2].length() >= 25)? data[2].substring(0,25):data[2]);
+                hosname.setText(data[3]);
+
+                Picasso.get()
+                        .load(data[4])
+                        //.placeholder(R.drawable.user_placeholder)
+                        //.error(R.drawable.user_placeholder_error)
+                        .into(imgente);
+
+                convertView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Uri uri = Uri.parse(sacarurl(meg.get(position).getContenmef()));
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        contex.startActivity(intent);
+                    }
+                });
+                if (meg.get(position).getMeg() != null){
+                    messeg.setText(meg.get(position).getContenmef());
+
+                }else{ //sino hay itens se ingresala la imagen
+                    //valida si en caso que no se pase la posicion +1 verificaremos un tipo de respuesta
+                    if ((position+1)<=meg.size()-1 && (position-1)>=0){
+                        if(meg.get(position+1).getTipo() == 's'){
+                            convertView.findViewById(R.id.timecontnConte).setVisibility(View.GONE);
+                        }
+                        if(meg.get(position+1).getTipo() == 'r'){
+                            convertView.findViewById(R.id.timecontnConte).setVisibility(View.GONE);
+                        }else if(meg.get(position-1).getTipo() == 'r'){
+                            //perfil.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                }
+
+                //Log.d("url",sacarurl(meg.get(position).getContenmef()));
+            }
+            //System.out.println(meg.get(position).getContenmef().split("\n"));
         }else if (meg.get(position).getTipo() == 'e'){
             if(Inflt == null){
                 convertView = LayoutInflater.from(contex).inflate(R.layout.adaptermasegeemisor,null);

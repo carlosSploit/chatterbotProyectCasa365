@@ -1,135 +1,246 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".View.busondemesseg">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="match_parent"
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigationbarp"
+        android:visibility="gone"
+        android:layout_width="200dp"
+        android:elevation="5dp"
         android:layout_height="wrap_content"
-        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+        android:background="@drawable/fondoform"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/fondoformheadnav"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/photouserid"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/nameuserid"
+                        android:textAlignment="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Carlos Arturo"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/correouserid"
+                        android:textAlignment="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="arturo1421200@"
+                        android:textSize="10dp" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/fondoor"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/cerrarcesbt"
+                    android:textAlignment="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:clickable="true"
+                    android:text="Cerrar Secion" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/fondoor"/>
+
+                <TextView
+                    android:id="@+id/salirbt"
+                    android:textAlignment="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:clickable="true"
+                    android:text="Salir" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.navigation.NavigationView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/my_tolbarmesf"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/transparent">
+            android:layout_height="wrap_content"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <!--.................Estructura de tolbar.................-->
-            <LinearLayout
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/my_tolbarmesf"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="?attr/actionBarSize"
+                android:background="@android:color/transparent">
 
-                <!--<Button
+                <!--.................Estructura de tolbar.................-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <!--<Button
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:background="@drawable/ic_baseline_arrow_back_24"
                     android:onClick="retroceder" />-->
 
-                <!--linea de separacion-->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="20"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    <!--linea de separacion-->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="20"
+                        android:orientation="horizontal">
 
-                    <ImageView
-                        android:id="@+id/photper"
-                        android:layout_width="120dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center|center_horizontal"
-                        android:src="@drawable/logo"
-                        android:layout_marginLeft="10dp"/>
+                        <ImageView
+                            android:id="@+id/photper"
+                            android:layout_width="120dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center|center_horizontal"
+                            android:layout_marginLeft="10dp"
+                            android:src="@drawable/logo" />
 
-                </LinearLayout>
+                    </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/nombreuser"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Carlos arturo querrero castillo"
-                        android:layout_gravity="center_vertical|center_horizontal"
-                        android:textSize="16dp"
-                        android:layout_marginLeft="6dp"/>
+                        android:layout_gravity="right"
+                        android:orientation="horizontal">
 
-                    <ImageView
-                        android:id="@+id/imageuser"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center_vertical|center_horizontal"
-                        android:src="@drawable/logo"
-                        android:layout_marginLeft="5dp">
-                    </ImageView>
+                        <TextView
+                            android:id="@+id/nombreuser"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical|center_horizontal"
+                            android:layout_marginLeft="6dp"
+                            android:text="Carlos arturo querrero castillo"
+                            android:textSize="16dp" />
+
+                        <ImageView
+                            android:id="@+id/imageuser"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center_vertical|center_horizontal"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="15dp"
+                            android:src="@drawable/logo"></ImageView>
+                    </LinearLayout>
+
                 </LinearLayout>
+                <!--..................................................-->
+            </androidx.appcompat.widget.Toolbar>
 
-            </LinearLayout>
-            <!--..................................................-->
-        </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
 
-    </com.google.android.material.appbar.AppBarLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/white"
-        android:layout_gravity="center_vertical|center_horizontal"
-        android:layout_weight="1">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_weight="1"
+            android:background="@color/white">
 
-        <ImageView
-            android:id="@+id/iaperfil"
-            android:layout_width="225dp"
-            android:layout_height="250dp"
-            android:layout_gravity="center"
-            android:scaleType="fitCenter"
+            <ImageView
+                android:id="@+id/iaperfil"
+                android:layout_width="225dp"
+                android:layout_height="250dp"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/parpadeo20" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/fondoedit">
+
+            <GridView
+                android:id="@+id/contenmeg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="8dp"
+                android:numColumns="1"
+                android:scrollbars="vertical"
+                android:verticalSpacing="5dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#eeeeee"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/girl_neut" />
+            app:layout_constraintStart_toStartOf="parent">
 
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="5dp"
-        android:layout_weight="1"
-        android:background="@drawable/fondoedit">
-        <GridView
-            android:id="@+id/contenmeg"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="8dp"
-            android:numColumns="1"
-            android:scrollbars="vertical"
-            android:verticalSpacing="5dp" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="#eeeeee"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <!--Boton de iconos
+            <!--Boton de iconos
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -145,71 +256,71 @@
                 android:src="@drawable/ic_baseline_sentiment_satisfied_alt_24" />
 
         </LinearLayout>-->
-        <LinearLayout
-            android:id="@+id/animascarga"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:gravity="center_horizontal|center_vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="5dp"
-            android:elevation="5dp"
-            android:layout_marginRight="5dp"
-            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/animascarga"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:elevation="5dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/imageanimacion"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:background="@android:color/transparent"
-                android:clickable="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_baseline_mic_none_24" />
+                <ImageButton
+                    android:id="@+id/imageanimacion"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@android:color/transparent"
+                    android:clickable="true"
+                    android:scaleType="fitXY" />
 
-        </LinearLayout>
-        <!--Text de Ingresar mensaje-->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="5dp"
-            android:layout_weight="60"
-            android:elevation="5dp"
-            android:background="@drawable/fondoform">
-
-            <EditText
-                android:id="@+id/mesag"
-                style="@android:style/Widget.AutoCompleteTextView"
-                android:layout_width="match_parent"
+            </LinearLayout>
+            <!--Text de Ingresar mensaje-->
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:background="@android:color/transparent" />
-        </LinearLayout>
-        <!--Boton de ingresar datos-->
-        <LinearLayout
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/fondobutton"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:gravity="center_horizontal|center_vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="5dp"
-            android:elevation="5dp"
-            android:layout_marginRight="10dp"
-            android:orientation="vertical">
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="60"
+                android:background="@drawable/fondoform"
+                android:elevation="5dp">
 
-            <ImageButton
-                android:id="@+id/Enviarmenss"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:background="@android:color/transparent"
-                android:clickable="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_baseline_mic_none_24" />
+                <EditText
+                    android:id="@+id/mesag"
+                    style="@android:style/Widget.AutoCompleteTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@android:color/transparent" />
+            </LinearLayout>
+            <!--Boton de ingresar datos-->
+            <LinearLayout
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/fondobutton"
+                android:elevation="5dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="vertical">
 
+                <ImageButton
+                    android:id="@+id/Enviarmenss"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@android:color/transparent"
+                    android:clickable="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_baseline_mic_none_24" />
+
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

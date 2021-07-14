@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">GOJOM</string>
     <string name="page_title">Whatsaap</string>
+    <string name="domineret">chatterbotte.herokuapp.com</string>
+    <string name="domineprue">192.168.0.7:443</string>
     <string name="favorite">favoritos</string>
     <string name="content_description_favorite"></string>
     <string name="search">buscar</string>
